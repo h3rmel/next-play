@@ -22,7 +22,7 @@ O Volleyball Sorter é um aplicativo web progressivo (PWA) projetado para auxili
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/seu-usuario/volleyball-sorter.git
+   git clone https://github.com/h3rmel/volleyball-sorter.git
    cd volleyball-sorter
    ```
 
