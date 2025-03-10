@@ -11,7 +11,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "robots.txt", "volleyball-icon.svg"],
+      includeAssets: ["favicon.ico", "robots.txt", "favicon.svg"],
       manifest: {
         name: "Volleyball Sorter",
         short_name: "VoleiSorter",
@@ -21,17 +21,17 @@ export default defineConfig({
         display: "standalone",
         icons: [
           {
-            src: "/volleyball-icon.svg",
+            src: "/favicon.svg",
             sizes: "192x192",
             type: "image/svg+xml"
           },
           {
-            src: "/volleyball-icon.svg",
+            src: "/favicon.svg",
             sizes: "512x512",
             type: "image/svg+xml"
           },
           {
-            src: "/volleyball-icon.svg",
+            src: "/favicon.svg",
             sizes: "512x512",
             type: "image/svg+xml",
             purpose: "any maskable"
