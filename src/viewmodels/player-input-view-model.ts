@@ -5,6 +5,7 @@ export function usePlayerInputViewModel() {
     players, 
     addPlayer, 
     removePlayer, 
+    clearPlayers,
     goToNextStage 
   } = useGameStore();
 
@@ -21,6 +22,10 @@ export function usePlayerInputViewModel() {
     
     removePlayerById: (id: string) => {
       removePlayer(id);
+    },
+    
+    removeAllPlayers: () => {
+      clearPlayers();
     },
     
     canProceed: () => players.length >= 2,
