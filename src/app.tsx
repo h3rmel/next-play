@@ -92,7 +92,7 @@ export function App() {
   return (
     <div className="flex flex-col min-h-screen gap-4 p-2 sm:p-0">
       <header>
-        <div className="flex gap-4 justify-between items-center px-2 fixed top-4 right-4">
+        <div className="flex gap-4 justify-between items-center px-4 fixed top-4 right-4 z-10">
           <ThemeToggle />
           {(stage === "playerInput" || stage === "game") && (
             <Button
@@ -105,7 +105,7 @@ export function App() {
             </Button>
           )}
         </div>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center py-2 sm:py-4">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center py-6 sm:py-8 text-primary">
           Próxima Jogada
         </h1>
       </header>
@@ -114,7 +114,9 @@ export function App() {
           <Alert className="flex items-center justify-between max-w-md mx-auto mb-4">
             <AlertTitle>Instale o aplicativo para usar offline.</AlertTitle>
             <AlertDescription>
-              <Button onClick={handleInstallClick}>Instalar</Button>
+              <Button onClick={handleInstallClick} variant="outline">
+                Instalar
+              </Button>
             </AlertDescription>
           </Alert>
         )}

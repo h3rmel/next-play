@@ -55,7 +55,7 @@ export function GameView() {
             Ver Histórico
           </Button>
           <Button
-            variant="destructive"
+            variant="default"
             size="lg"
             onClick={resetEntireGame}
             className="w-full sm:w-auto text-sm sm:text-base"

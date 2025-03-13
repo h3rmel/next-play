@@ -20,8 +20,14 @@ export function PlayerInputView() {
   const [error, setError] = useState("");
   const [importDialogOpen, setImportDialogOpen] = useState(false);
   const [clearAlertOpen, setClearAlertOpen] = useState(false);
-  const { players, addNewPlayer, removePlayerById, removeAllPlayers, canProceed, proceedToGame } =
-    usePlayerInputViewModel();
+  const {
+    players,
+    addNewPlayer,
+    removePlayerById,
+    removeAllPlayers,
+    canProceed,
+    proceedToGame,
+  } = usePlayerInputViewModel();
 
   function handleAddPlayer(e: React.FormEvent) {
     e.preventDefault();
@@ -47,13 +53,13 @@ export function PlayerInputView() {
 
   const handleImportPlayers = (playerNames: string[]) => {
     let successCount = 0;
-    
+
     for (const name of playerNames) {
       if (name && addNewPlayer(name)) {
         successCount++;
       }
     }
-    
+
     if (successCount > 0) {
       setError("");
       toast.success("Jogadores importados com sucesso");
@@ -71,11 +77,11 @@ export function PlayerInputView() {
     <>
       <Card className="w-full max-w-md mx-auto shadow-md">
         <CardHeader className="pb-4">
-          <CardTitle className="text-center text-xl sm:text-2xl">
+          <CardTitle className="text-center text-xl sm:text-2xl text-primary">
             Cadastro de Jogadores
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <form onSubmit={handleAddPlayer} className="space-y-3 sm:space-y-4">
             <div className="flex flex-col sm:flex-row gap-2 sm:space-x-2">
               <Input
@@ -88,7 +94,7 @@ export function PlayerInputView() {
                 Adicionar
               </Button>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row justify-center gap-2 sm:space-x-4">
               <Button
                 type="button"
@@ -100,7 +106,7 @@ export function PlayerInputView() {
                 <ListPlus className="mr-2 h-4 w-4" />
                 Importar lista
               </Button>
-              
+
               <Button
                 type="button"
                 variant="outline"
@@ -113,19 +119,19 @@ export function PlayerInputView() {
                 Remover todos
               </Button>
             </div>
-            
+
             {error && (
               <Alert variant="destructive" className="text-sm">
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            
+
             <div className="mt-3 sm:mt-4">
-              <h3 className="text-base sm:text-lg font-semibold mb-2">
+              <h3 className="text-base sm:text-lg font-semibold mb-2 text-primary">
                 Jogadores ({players.length})
               </h3>
               {players.length === 0 ? (
-                <p className="text-gray-500 text-center text-sm sm:text-base">
+                <p className="text-muted-foreground text-center text-sm sm:text-base">
                   Nenhum jogador adicionado
                 </p>
               ) : (
@@ -133,7 +139,7 @@ export function PlayerInputView() {
                   {players.map((player) => (
                     <li
                       key={player.id}
-                      className="flex items-center justify-between p-2 border rounded-md text-sm sm:text-base"
+                      className="flex items-center justify-between p-2 border  bg-accent/10 rounded-md text-sm sm:text-base"
                     >
                       <span className="pl-2">{player.name}</span>
                       <Button
@@ -161,13 +167,13 @@ export function PlayerInputView() {
           </Button>
         </CardFooter>
       </Card>
-      
+
       <ImportPlayersDialog
         open={importDialogOpen}
         onOpenChange={setImportDialogOpen}
         onImport={handleImportPlayers}
       />
-      
+
       <ClearPlayersAlert
         open={clearAlertOpen}
         onOpenChange={setClearAlertOpen}
