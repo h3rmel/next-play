@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import { Player } from '@/models/player';
 import { Team } from '@/models/team';
+import { addTeamHistoryEntry } from '@/models/team-history';
 
-export type GameStage = 'playerInput' | 'game';
+export type GameStage = 'playerInput' | 'game' | 'history';
 
 interface GameState {
   players: Player[];
@@ -16,15 +17,14 @@ interface GameState {
   
   // Actions for teams
   createTeams: () => void;
+  reshuffleTeams: () => void;
   
   // Actions for game
-  incrementScore: (teamId: string) => void;
-  decrementScore: (teamId: string) => void;
-  resetMatch: () => void;
   resetGame: () => void;
   
   // Navigation
   goToNextStage: () => void;
+  setStage: (stage: GameStage) => void;
 }
 
 export const useGameStore = create<GameState>((set) => ({
@@ -59,41 +59,58 @@ export const useGameStore = create<GameState>((set) => ({
       {
         id: crypto.randomUUID(),
         name: 'Time A',
-        players: team1Players,
-        score: 0
+        players: team1Players
       },
       {
         id: crypto.randomUUID(),
         name: 'Time B',
-        players: team2Players,
-        score: 0
+        players: team2Players
       }
     ];
     
     return { teams };
   }),
   
+  reshuffleTeams: () => set((state) => {
+    // Get all players from all teams
+    const allPlayers = state.teams.flatMap(team => team.players);
+    
+    if (allPlayers.length < 2) return state;
+    
+    // Shuffle all players
+    const shuffledPlayers = [...allPlayers].sort(() => Math.random() - 0.5);
+    
+    // Split players into same number of teams as before
+    const numberOfTeams = state.teams.length;
+    const playersPerTeam = Math.ceil(shuffledPlayers.length / numberOfTeams);
+    
+    // Create new teams with same IDs and names but shuffled players
+    const newTeams = state.teams.map((team, index) => {
+      const startIdx = index * playersPerTeam;
+      const endIdx = Math.min(startIdx + playersPerTeam, shuffledPlayers.length);
+      const teamPlayers = shuffledPlayers.slice(startIdx, endIdx);
+      
+      return {
+        ...team,
+        players: teamPlayers
+      };
+    });
+    
+    return { teams: newTeams };
+  }),
+  
   // Game actions
-  incrementScore: (teamId: string) => set((state) => ({
-    teams: state.teams.map(team => 
-      team.id === teamId ? { ...team, score: team.score + 1 } : team
-    )
-  })),
-  
-  decrementScore: (teamId: string) => set((state) => ({
-    teams: state.teams.map(team => 
-      team.id === teamId && team.score > 0 ? { ...team, score: team.score - 1 } : team
-    )
-  })),
-  
-  resetMatch: () => set((state) => ({
-    teams: state.teams.map(team => ({ ...team, score: 0 }))
-  })),
-  
-  resetGame: () => set({
-    players: [],
-    teams: [],
-    stage: 'playerInput'
+  resetGame: () => set((state) => {
+    // Salvar o estado atual no histórico se estiver na etapa de jogo
+    if (state.stage === 'game' && state.teams.length > 0) {
+      addTeamHistoryEntry(state.teams);
+    }
+    
+    return {
+      players: [],
+      teams: [],
+      stage: 'playerInput'
+    };
   }),
   
   // Navigation
@@ -110,14 +127,12 @@ export const useGameStore = create<GameState>((set) => ({
         {
           id: crypto.randomUUID(),
           name: 'Time A',
-          players: team1Players,
-          score: 0
+          players: team1Players
         },
         {
           id: crypto.randomUUID(),
           name: 'Time B',
-          players: team2Players,
-          score: 0
+          players: team2Players
         }
       ];
       
@@ -125,5 +140,7 @@ export const useGameStore = create<GameState>((set) => ({
     }
     
     return state;
-  })
+  }),
+  
+  setStage: (stage) => set({ stage })
 })); 

@@ -4,5 +4,4 @@ export interface Team {
   id: string;
   name: string;
   players: Player[];
-  score: number;
 } 
