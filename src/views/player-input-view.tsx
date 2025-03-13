@@ -12,14 +12,16 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ImportPlayersDialog } from "@/components/import-players-dialog";
 import { ClearPlayersAlert } from "@/components/clear-players-alert";
-import { ListPlus, Trash2 } from "lucide-react";
+import { ListPlus, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export function PlayerInputView() {
   const [playerName, setPlayerName] = useState("");
   const [error, setError] = useState("");
   const [importDialogOpen, setImportDialogOpen] = useState(false);
   const [clearAlertOpen, setClearAlertOpen] = useState(false);
+
   const {
     players,
     addNewPlayer,
@@ -28,6 +30,8 @@ export function PlayerInputView() {
     canProceed,
     proceedToGame,
   } = usePlayerInputViewModel();
+
+  // #region Handlers
 
   function handleAddPlayer(e: React.FormEvent) {
     e.preventDefault();
@@ -51,7 +55,7 @@ export function PlayerInputView() {
     }
   }
 
-  const handleImportPlayers = (playerNames: string[]) => {
+  function handleImportPlayers(playerNames: string[]) {
     let successCount = 0;
 
     for (const name of playerNames) {
@@ -64,26 +68,29 @@ export function PlayerInputView() {
       setError("");
       toast.success("Jogadores importados com sucesso");
     }
-  };
+  }
 
-  const handleClearPlayers = () => {
+  function handleClearPlayers() {
     if (players.length > 0) {
       removeAllPlayers();
       toast.success("Todos os jogadores foram removidos");
     }
-  };
+  }
+
+  // #endregion
 
   return (
     <>
-      <Card className="w-full max-w-md mx-auto shadow-md">
-        <CardHeader className="pb-4">
+      <Card className={cn("w-full max-w-lg", "mx-auto mb-4", "shadow-md")}>
+        <CardHeader>
           <CardTitle className="text-center text-xl sm:text-2xl text-primary">
             Cadastro de Jogadores
           </CardTitle>
         </CardHeader>
-        <CardContent className="pt-6">
+        {/* Form */}
+        <CardContent>
           <form onSubmit={handleAddPlayer} className="space-y-3 sm:space-y-4">
-            <div className="flex flex-col sm:flex-row gap-2 sm:space-x-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Input
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
@@ -94,7 +101,7 @@ export function PlayerInputView() {
                 Adicionar
               </Button>
             </div>
-
+            {/* Actions */}
             <div className="flex flex-col sm:flex-row justify-center gap-2 sm:space-x-4">
               <Button
                 type="button"
@@ -106,7 +113,6 @@ export function PlayerInputView() {
                 <ListPlus className="mr-2 h-4 w-4" />
                 Importar lista
               </Button>
-
               <Button
                 type="button"
                 variant="outline"
@@ -119,14 +125,14 @@ export function PlayerInputView() {
                 Remover todos
               </Button>
             </div>
-
+            {/* Error */}
             {error && (
               <Alert variant="destructive" className="text-sm">
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-
-            <div className="mt-3 sm:mt-4">
+            {/* Players List */}
+            <section className="mt-3 sm:mt-4">
               <h3 className="text-base sm:text-lg font-semibold mb-2 text-primary">
                 Jogadores ({players.length})
               </h3>
@@ -139,41 +145,45 @@ export function PlayerInputView() {
                   {players.map((player) => (
                     <li
                       key={player.id}
-                      className="flex items-center justify-between p-2 border  bg-accent/10 rounded-md text-sm sm:text-base"
+                      className={cn(
+                        "flex items-center justify-between",
+                        "p-2 border rounded-md",
+                        "bg-accent/10 text-sm sm:text-base"
+                      )}
                     >
                       <span className="pl-2">{player.name}</span>
                       <Button
                         variant="outline"
-                        size="sm"
+                        size="icon"
                         onClick={() => removePlayerById(player.id)}
-                        className="text-xs sm:text-sm h-8 sm:h-9"
+                        // className="text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/30"
                       >
-                        Remover
+                        <X className="size-4" />
                       </Button>
                     </li>
                   ))}
                 </ul>
               )}
-            </div>
+            </section>
           </form>
         </CardContent>
+        {/* Footer */}
         <CardFooter>
           <Button
             onClick={proceedToGame}
             disabled={!canProceed()}
-            className="w-full h-10 sm:h-11 text-sm sm:text-base"
+            className={cn("w-full h-10 sm:h-11", "text-sm sm:text-base")}
           >
             Prosseguir para o Jogo
           </Button>
         </CardFooter>
       </Card>
-
+      {/* Dialogs */}
       <ImportPlayersDialog
         open={importDialogOpen}
         onOpenChange={setImportDialogOpen}
         onImport={handleImportPlayers}
       />
-
       <ClearPlayersAlert
         open={clearAlertOpen}
         onOpenChange={setClearAlertOpen}
