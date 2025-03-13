@@ -12,9 +12,10 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ImportPlayersDialog } from "@/components/import-players-dialog";
 import { ClearPlayersAlert } from "@/components/clear-players-alert";
-import { ListPlus, Trash2, X } from "lucide-react";
+import { ListPlus, Trash2, X, Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Label } from "@/components/ui/label";
 
 export function PlayerInputView() {
   const [playerName, setPlayerName] = useState("");
@@ -24,6 +25,8 @@ export function PlayerInputView() {
 
   const {
     players,
+    numberOfTeams,
+    updateNumberOfTeams,
     addNewPlayer,
     removePlayerById,
     removeAllPlayers,
@@ -77,6 +80,18 @@ export function PlayerInputView() {
     }
   }
 
+  function handleDecreaseTeams() {
+    if (numberOfTeams > 2) {
+      updateNumberOfTeams(numberOfTeams - 1);
+    }
+  }
+
+  function handleIncreaseTeams() {
+    if (numberOfTeams < 4) {
+      updateNumberOfTeams(numberOfTeams + 1);
+    }
+  }
+
   // #endregion
 
   return (
@@ -89,7 +104,36 @@ export function PlayerInputView() {
         </CardHeader>
         {/* Form */}
         <CardContent>
-          <form onSubmit={handleAddPlayer} className="space-y-3 sm:space-y-4">
+          <form
+            onSubmit={handleAddPlayer}
+            className={cn("flex flex-col gap-3")}
+          >
+            {/* Number of Teams */}
+            <div className="flex flex-col gap-2">
+              <Label>Número de Times</Label>
+              <div className="flex items-center gap-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon-sm"
+                  onClick={handleDecreaseTeams}
+                  disabled={numberOfTeams <= 2}
+                >
+                  <Minus className="size-4" />
+                </Button>
+                <span className="font-bold text-lg">{numberOfTeams}</span>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon-sm"
+                  onClick={handleIncreaseTeams}
+                  disabled={numberOfTeams >= 4}
+                >
+                  <Plus className="size-4" />
+                </Button>
+              </div>
+            </div>
+            {/* Player Input */}
             <div className="flex flex-col sm:flex-row gap-2">
               <Input
                 value={playerName}
@@ -102,26 +146,31 @@ export function PlayerInputView() {
               </Button>
             </div>
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row justify-center gap-2 sm:space-x-4">
+            <div
+              className={cn(
+                "w-full",
+                "flex flex-col sm:flex-row justify-center gap-2"
+              )}
+            >
               <Button
                 type="button"
                 variant="outline"
-                size="sm"
+                size="lg"
                 onClick={() => setImportDialogOpen(true)}
-                className="w-full sm:w-auto text-xs sm:text-sm"
+                className="flex-grow text-xs sm:text-sm"
               >
-                <ListPlus className="mr-2 h-4 w-4" />
+                <ListPlus className="mr-2 size-4" />
                 Importar lista
               </Button>
               <Button
                 type="button"
                 variant="outline"
-                size="sm"
+                size="lg"
                 onClick={() => setClearAlertOpen(true)}
                 disabled={players.length === 0}
-                className="w-full sm:w-auto text-xs sm:text-sm text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/30"
+                className="flex-grow text-xs sm:text-sm text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/30"
               >
-                <Trash2 className="mr-2 h-4 w-4" />
+                <Trash2 className="mr-2 size-4" />
                 Remover todos
               </Button>
             </div>

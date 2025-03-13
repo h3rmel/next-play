@@ -12,9 +12,9 @@ export function GameView() {
   if (teams.length < 2) {
     return (
       <div className={cn("max-w-4xl", "flex flex-col gap-4 items-center")}>
-        <div className={cn("w-full", "flex gap-6 justify-center", "mx-auto")}>
-          <Skeleton className="w-96 h-56" />
-          <Skeleton className="w-96 h-56" />
+        <div className={cn("w-full", "grid grid-cols-1 gap-6 sm:grid-cols-2")}>
+          <Skeleton className="w-full h-56" />
+          <Skeleton className="w-full h-56" />
         </div>
         <div
           className={cn(
@@ -29,17 +29,23 @@ export function GameView() {
     );
   }
 
+  // Define o layout baseado no número de times
+  const gridColumnsClass = teams.length > 2 
+    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2" 
+    : "grid-cols-1 sm:grid-cols-2";
+
   return (
     <section className={cn("max-w-4xl", "flex flex-col gap-4 items-center")}>
       {/* Teams */}
       <div
         className={cn(
           "w-full",
-          "grid grid-cols-1 gap-6 sm:grid-cols-2"
+          "grid gap-6",
+          gridColumnsClass
         )}
       >
         {teams.map((team) => (
-          <Card key={team.id}>
+          <Card key={team.id} className="h-full">
             <CardHeader>
               <CardTitle>{team.name}</CardTitle>
             </CardHeader>

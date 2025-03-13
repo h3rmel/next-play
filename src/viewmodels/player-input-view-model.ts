@@ -6,11 +6,14 @@ export function usePlayerInputViewModel() {
     addPlayer, 
     removePlayer, 
     clearPlayers,
+    numberOfTeams,
+    setNumberOfTeams,
     goToNextStage 
   } = useGameStore();
 
   return {
     players,
+    numberOfTeams,
     
     addNewPlayer: (name: string) => {
       if (name.trim()) {
@@ -27,11 +30,15 @@ export function usePlayerInputViewModel() {
     removeAllPlayers: () => {
       clearPlayers();
     },
+
+    updateNumberOfTeams: (count: number) => {
+      setNumberOfTeams(count);
+    },
     
-    canProceed: () => players.length >= 2,
+    canProceed: () => players.length >= numberOfTeams,
     
     proceedToGame: () => {
-      if (players.length >= 2) {
+      if (players.length >= numberOfTeams) {
         goToNextStage();
       }
     }
