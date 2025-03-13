@@ -13,9 +13,9 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt", "favicon.svg"],
       manifest: {
-        name: "Volleyball Sorter",
-        short_name: "VoleiSorter",
-        description: "Aplicativo para sortear times de voleibol e gerenciar placar",
+        name: "Próxima Jogada",
+        short_name: "Próxima Jogada",
+        description: "Aplicativo para sortear times de forma rápida e simples.",
         theme_color: "#ffffff",
         background_color: "#ffffff",
         display: "standalone",
@@ -23,20 +23,20 @@ export default defineConfig({
           {
             src: "/favicon.svg",
             sizes: "192x192",
-            type: "image/svg+xml"
-          },
-          {
-            src: "/favicon.svg",
-            sizes: "512x512",
-            type: "image/svg+xml"
+            type: "image/svg+xml",
           },
           {
             src: "/favicon.svg",
             sizes: "512x512",
             type: "image/svg+xml",
-            purpose: "any maskable"
-          }
-        ]
+          },
+          {
+            src: "/favicon.svg",
+            sizes: "512x512",
+            type: "image/svg+xml",
+            purpose: "any maskable",
+          },
+        ],
       },
       workbox: {
         runtimeCaching: [
@@ -47,22 +47,22 @@ export default defineConfig({
               cacheName: "google-fonts-cache",
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
               },
               cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          }
+                statuses: [0, 200],
+              },
+            },
+          },
         ],
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
       },
       devOptions: {
         enabled: true,
-        type: "module"
+        type: "module",
       },
-      injectRegister: 'auto',
-      strategies: 'generateSW'
+      injectRegister: "auto",
+      strategies: "generateSW",
     }),
   ],
   resolve: {

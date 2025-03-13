@@ -1,16 +1,8 @@
-# Volleyball Sorter
+# Próxima Jogada
 
 ## Descrição
 
-O Volleyball Sorter é um aplicativo web progressivo (PWA) projetado para auxiliar na organização de partidas de voleibol. Este aplicativo facilita o sorteio aleatório de jogadores em times equilibrados e oferece um sistema de placar intuitivo para acompanhar a pontuação durante o jogo.
-
-### Funcionalidades principais:
-
-- **Cadastro de Jogadores**: Interface simples para adicionar o nome de todos os participantes.
-- **Sorteio Automático**: Distribui os jogadores aleatoriamente em dois times balanceados.
-- **Placar Interativo**: Sistema de pontuação fácil de usar com controles para adicionar ou remover pontos.
-- **Modo Offline**: Por ser um PWA, o aplicativo pode ser instalado e usado mesmo sem conexão com a internet.
-- **Interface Responsiva**: Experiência otimizada em dispositivos móveis e desktops.
+Aplicativo web progressivo (PWA) para gerar times de forma rápida e simples.
 
 ## Como executar o projeto
 
@@ -22,8 +14,8 @@ O Volleyball Sorter é um aplicativo web progressivo (PWA) projetado para auxili
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/h3rmel/volleyball-sorter.git
-   cd volleyball-sorter
+   git clone https://github.com/h3rmel/next-play.git
+   cd next-play
    ```
 
 2. **Instale as dependências**

@@ -87,7 +87,7 @@ export function App() {
       <ThemeToggle />
       <header className="mx-auto mb-4">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center py-2 sm:py-4">
-          Sorteador de Voleibol
+          Próxima Jogada
         </h1>
       </header>
 
