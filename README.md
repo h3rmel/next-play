@@ -1,8 +1,8 @@
 # Próxima Jogada
 
-## Descrição
-
 Aplicativo web progressivo (PWA) para gerar times de forma rápida e simples.
+
+Hospedado na [Vercel](https://vercel.com), você pode acessá-lo por [este link](https://next-play-hermel.vercel.app/).
 
 ## Como executar o projeto
 
