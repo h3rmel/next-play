@@ -138,7 +138,7 @@ export function App() {
         </nav>
       </header>
       {/* Content */}
-      <main className={cn("max-w-4xl w-full mx-auto", "sm:px-0 px-4")}>
+      <main className={cn("max-w-4xl w-full mx-auto my-auto", "sm:px-0 px-4")}>
         {isInstallPromptShown && (
           <Alert
             className={cn(
