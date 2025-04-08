@@ -16,8 +16,8 @@ export default defineConfig({
         name: "Próxima Jogada",
         short_name: "Próxima Jogada",
         description: "Aplicativo para sortear times de forma rápida e simples.",
-        theme_color: "#ffffff",
-        background_color: "#ffffff",
+        theme_color: "#09090b",
+        background_color: "#09090b",
         display: "standalone",
         icons: [
           {
