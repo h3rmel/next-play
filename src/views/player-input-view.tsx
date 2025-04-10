@@ -96,7 +96,7 @@ export function PlayerInputView() {
 
   return (
     <>
-      <Card className={cn("w-full max-w-lg", "mx-auto mb-4", "shadow-md")}>
+      <Card className={cn("w-full max-w-lg", "shadow-md")}>
         <CardHeader>
           <CardTitle className="text-center text-xl sm:text-2xl text-primary">
             Cadastro de Jogadores
@@ -134,12 +134,12 @@ export function PlayerInputView() {
               </div>
             </div>
             {/* Player Input */}
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Input
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
                 placeholder="Nome do jogador"
-                className="flex-1 h-10 sm:h-auto"
+                className="h-9"
               />
               <Button type="submit" className="w-full sm:w-auto">
                 Adicionar
@@ -149,7 +149,7 @@ export function PlayerInputView() {
             <div
               className={cn(
                 "w-full",
-                "flex flex-col sm:flex-row justify-center gap-2"
+                "flex flex-col sm:flex-row justify-center gap-3"
               )}
             >
               <Button
@@ -205,7 +205,6 @@ export function PlayerInputView() {
                         variant="outline"
                         size="icon"
                         onClick={() => removePlayerById(player.id)}
-                        // className="text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/30"
                       >
                         <X className="size-4" />
                       </Button>

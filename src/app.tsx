@@ -3,12 +3,12 @@ import { useGameStore } from "@/store/game-store";
 import { PlayerInputView } from "@/views/player-input-view";
 import { GameView } from "@/views/game-view";
 import { HistoryView } from "@/views/history-view";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { OfflineFallback } from "@/components/offline-fallback";
 import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
-import { History, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { cn } from "./lib/utils";
+import { Navbar } from "./components/layout/navbar";
 
 // Define BeforeInstallPromptEvent type
 interface BeforeInstallPromptEvent extends Event {
@@ -26,7 +26,7 @@ export function App() {
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
 
-  const { stage, setStage } = useGameStore();
+  const { stage } = useGameStore();
 
   // #region Handlers
 
@@ -108,37 +108,9 @@ export function App() {
   return (
     <div className={cn("flex flex-col gap-4", "min-h-screen")}>
       {/* Header */}
-      <header
-        className={cn(
-          "sticky top-0 left-0 z-50",
-          "w-full",
-          "border-b border-border",
-          "bg-background/30 backdrop-blur-sm"
-        )}
-      >
-        <nav
-          className={cn(
-            "max-w-4xl mx-auto",
-            "flex justify-between items-center",
-            "py-4 px-4 sm:px-0"
-          )}
-        >
-          <h1 className={cn("text-2xl font-bold")}>Próxima Jogada</h1>
-          <section className={cn("flex gap-2 items-center")}>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setStage("history")}
-              title="Ver histórico de sorteios"
-            >
-              <History className="size-4" />
-            </Button>
-            <ThemeToggle />
-          </section>
-        </nav>
-      </header>
+      <Navbar />
       {/* Content */}
-      <main className={cn("max-w-4xl w-full mx-auto my-auto", "sm:px-0 px-4")}>
+      <main className={cn("max-w-lg w-full mx-auto my-auto", "px-4 sm:px-0")}>
         {isInstallPromptShown && (
           <Alert
             className={cn(
